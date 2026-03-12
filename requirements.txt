@@ -1,0 +1,4 @@
+osmnx
+networkx
+flask
+mysql-connector-python
