@@ -1,35 +1,144 @@
-# Sistema de Roteirização para Entregas
+# 🗺️ Sistema de Otimização de Rotas para Entregas Urbanas
 
-Projeto desenvolvido para calcular a rota mais curta entre múltiplos pontos de entrega, auxiliando entregadores na otimização de tempo e deslocamento.
+> Trabalho desenvolvido para o XIII Seminário de Projetos Integradores 2026 — URI Erechim/RS  
+> Curso: Ciência da Computação
 
-## Tecnologias
+**Autores:** Alisson Silva & Ariel Liotto Angonese  
+**Instituição:** Universidade Regional Integrada do Alto Uruguai e das Missões (URI)  
+**Departamento:** Engenharias e Ciência da Computação — Erechim/RS
 
-- Python
+---
+
+## 📋 Sobre o Projeto
+
+O crescimento do comércio eletrônico e dos serviços de entrega urbana tem aumentado significativamente a demanda por soluções tecnológicas capazes de otimizar rotas e reduzir custos operacionais. Este projeto apresenta um **sistema web de roteirização** voltado ao cálculo da menor rota entre dois pontos em ambiente urbano.
+
+A solução utiliza dados geográficos reais obtidos do **OpenStreetMap**, representa a malha viária por meio de **grafos ponderados** e aplica o **Algoritmo de Dijkstra** para determinar o caminho mais eficiente entre origem e destino.
+
+O sistema integra conceitos de **banco de dados**, **engenharia de software** e **teoria dos grafos**, demonstrando a viabilidade de algoritmos clássicos combinados com dados reais para a construção de soluções de logística urbana.
+
+---
+
+## ✨ Funcionalidades
+
+- Cálculo da menor rota entre dois pontos em ambiente urbano
+- Representação da malha viária como grafo ponderado com dados reais do OpenStreetMap
+- Interface web para entrada de pontos de origem e destino
+- Visualização da rota calculada
+- Suporte a múltiplos pontos de entrega (cálculo sequencial de caminhos mínimos)
+- Armazenamento das informações via banco de dados relacional (MySQL)
+
+---
+
+## 🛠️ Tecnologias Utilizadas
+
+| Camada | Tecnologia |
+|--------|-----------|
+| Frontend | HTML5, CSS3, JavaScript |
+| Backend | Python 3, Flask |
+| Banco de Dados | MySQL |
+| Algoritmo de Rotas | Dijkstra (via NetworkX) |
+| Dados Geográficos | OpenStreetMap (via OSMnx) |
+
+---
+
+## 📐 Arquitetura
+
+O sistema modela o ambiente urbano como um **grafo ponderado**, onde:
+
+- **Vértices (nós)** → Interseções e pontos da malha viária
+- **Arestas** → Ruas e avenidas conectando os pontos
+- **Pesos** → Distância ou tempo de deslocamento entre os pontos
+
+O **Algoritmo de Dijkstra** é executado sobre esse grafo para encontrar o caminho de menor custo entre a origem e o destino. Para múltiplos destinos, o algoritmo é reaplicado sequencialmente, tratando cada destino alcançado como nova origem.
+
+---
+
+## 📁 Estrutura do Projeto
+
+```
+.
+├── app.py          # Servidor Flask e rotas da API
+├── config.py       # Configurações de banco de dados
+├── database.py     # Conexão com MySQL
+├── dijkstra.py     # Implementação do cálculo de rotas
+├── map.py          # Carregamento do mapa via OSMnx
+├── index.html      # Interface web principal
+├── script.js       # Lógica de interação do frontend
+└── style.css       # Estilos da interface
+```
+
+---
+
+## ⚙️ Pré-requisitos
+
+- Python 3.8+
 - MySQL
-- HTML
-- CSS
-- JavaScript
-- NetworkX
-- OSMnx
-- Leaflet
-- Flask
+- pip
 
-## Funcionalidades (planejadas)
+---
 
-- Cadastro de usuários
-- Cadastro de entregas
-- Registro de endereços
-- Cálculo de rota mais curta
-- Visualização da rota no mapa
+## 🚀 Como Executar
 
-## Estrutura do Projeto
+**1. Clone o repositório**
+```bash
+git clone https://github.com/seu-usuario/seu-repositorio.git
+cd seu-repositorio
+```
 
-backend → API e lógica do sistema  
-algoritmos → implementação dos algoritmos de rota  
-frontend → interface do usuário  
-data → manipulação de dados do OpenStreetMap  
-docs → documentação do projeto
+**2. Instale as dependências Python**
+```bash
+pip install flask mysql-connector-python networkx osmnx
+```
 
-## Autor
+**3. Configure o banco de dados**
 
-Projeto desenvolvido por Ariel Liotto Angonese e Alisson Silva para a disciplina **Projeto Integrador III – Ciência da Computação URI Campus Erechim**
+Edite o arquivo `config.py` com suas credenciais MySQL:
+```python
+DB_CONFIG = {
+    "host": "localhost",
+    "user": "seu_usuario",
+    "password": "sua_senha",
+    "database": "entregas"
+}
+```
+
+**4. Inicie o servidor**
+```bash
+python app.py
+```
+
+**5. Acesse a interface**
+
+Abra o arquivo `index.html` no navegador ou acesse `http://localhost:5000`.
+
+---
+
+## 🧠 Fundamentação Teórica
+
+### Algoritmo de Dijkstra
+
+Proposto por Edsger W. Dijkstra em 1959, é um dos métodos mais conhecidos para resolver o problema do **caminho mínimo em grafos ponderados com pesos não negativos**. Sua lógica baseia-se na exploração progressiva dos vértices, mantendo um conjunto de distâncias mínimas conhecidas a partir do vértice inicial.
+
+- **Complexidade simples:** O(n²)
+- **Complexidade otimizada** (com fila de prioridade): O((V + E) log V)
+
+### OpenStreetMap
+
+Plataforma colaborativa e aberta que fornece dados cartográficos detalhados de ruas, avenidas e interseções de cidades ao redor do mundo. Utilizada neste projeto como fonte de dados reais para a construção do grafo da malha viária.
+
+### Vehicle Routing Problem (VRP)
+
+Problema clássico de otimização e logística que envolve a definição de rotas eficientes para atendimento de múltiplos pontos. Este projeto trata uma versão simplificada do VRP, focada no cálculo do menor caminho entre dois pontos.
+
+---
+
+## 📚 Referências
+
+- DIJKSTRA, E. W. A note on two problems in connexion with graphs. *Numerische Mathematik*, 1:269–271, 1959.
+- LAPORTE, G. Fifty years of vehicle routing. *Transportation Science*, 43(4):408–416, 2009.
+- SOLOMON, M. M. Algorithms for the vehicle routing and scheduling problems with time window constraints. *Operations Research*, 35(2):254–265, 1987.
+- OpenStreetMap contributors. OpenStreetMap. Disponível em: https://www.openstreetmap.org. Acesso em: 29 mar. 2026.
+- Pallets Projects. Flask Documentation. Disponível em: https://flask.palletsprojects.com. Acesso em: 29 mar. 2026.
+- Python Software Foundation. Python Documentation. Disponível em: https://docs.python.org. Acesso em: 29 mar. 2026.
+- Oracle Corporation. MySQL Documentation. Disponível em: https://dev.mysql.com/doc. Acesso em: 29 mar. 2026.
