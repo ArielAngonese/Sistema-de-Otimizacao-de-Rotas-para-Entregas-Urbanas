@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from data.map import load_map, get_nearest_node, get_route_coordinates
+from services.map import load_map, get_nearest_node, get_route_coordinates
 from algorithms.dijkstra import calculate_route
 from database import get_all_deliveries, get_delivery_by_id, insert_delivery, insert_address, update_delivery_route
 
