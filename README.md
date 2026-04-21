@@ -58,14 +58,22 @@ O **Algoritmo de Dijkstra** é executado sobre esse grafo para encontrar o camin
 
 ```
 .
-├── app.py          # Servidor Flask e rotas da API
-├── config.py       # Configurações de banco de dados
-├── database.py     # Conexão com MySQL
-├── dijkstra.py     # Implementação do cálculo de rotas
-├── map.py          # Carregamento do mapa via OSMnx
-├── index.html      # Interface web principal
-├── script.js       # Lógica de interação do frontend
-└── style.css       # Estilos da interface
+├── algorithms/
+│   └── dijkstra.py       # Implementação do cálculo de rotas
+├── backend/
+│   ├── app.py            # Servidor Flask e rotas da API
+│   ├── config.py         # Configurações de banco de dados
+│   └── database.py       # Funções de acesso ao banco de dados
+├── frontend/
+│   ├── index.html        # Interface web principal
+│   ├── script.js         # Lógica de interação do frontend
+│   └── style.css         # Estilos da interface
+├── services/
+│   └── map.py            # Carregamento do mapa e geocodificação
+├── .gitignore
+├── LICENSE
+├── README.md
+└── requirements.txt
 ```
 
 ---
@@ -82,13 +90,13 @@ O **Algoritmo de Dijkstra** é executado sobre esse grafo para encontrar o camin
 
 **1. Clone o repositório**
 ```bash
-git clone https://github.com/seu-usuario/seu-repositorio.git
-cd seu-repositorio
+git clone https://github.com/ArielAngonese/Sistema-de-Monitoramento-de-Rede-.git
+cd Sistema-de-Monitoramento-de-Rede-.git
 ```
 
-**2. Instale as dependências Python**
+**2. Intale os pré-requisitos**
 ```bash
-pip install flask mysql-connector-python networkx osmnx
+pip install -r requirements.txt
 ```
 
 **3. Configure o banco de dados**
