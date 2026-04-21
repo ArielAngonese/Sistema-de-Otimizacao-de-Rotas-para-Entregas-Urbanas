@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from graph import graph
-from services.map import get_nearest_node, get_route_coordinates
+from services.map import get_nearest_node, get_route_coordinates, calculate_distance, calculate_estimated_time
 from algorithms.dijkstra import calculate_route
 from backend.database import get_all_deliveries, get_delivery_by_id, insert_delivery, insert_address, update_delivery_route
 
@@ -71,11 +71,18 @@ def calculate_route_api():
     path = calculate_route(graph, origin_node, destination_node)
     coordinates = get_route_coordinates(graph, path)
 
+    distance = calculate_distance(graph, path)
+    estimated_time = calculate_estimated_time(distance)
+
     if "delivery_id" in data:
         update_delivery_route(
             data["delivery_id"],
-            data["distance"],
-            data["estimated_time"]
-        )
+            distance,
+            estimated_time
+        )          # ← fechamento correto
 
-    return jsonify({"route": coordinates})
+    return jsonify({
+        "route": coordinates,
+        "distance_km": distance,
+        "estimated_time_minutes": estimated_time
+    })

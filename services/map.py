@@ -22,3 +22,17 @@ def get_route_coordinates(graph, path):
         point = graph.nodes[node]
         coordinates.append((point["y"], point["x"]))
     return coordinates
+
+# Função para calcular a distância total da rota
+def calculate_distance(graph, path):
+    total_distance = sum(
+        graph[path[i]][path[i + 1]][0]["length"]
+        for i in range(len(path) - 1)
+    )
+    return round(total_distance / 1000, 2)
+
+# Função para calcular o tempo estimado de entrega com base na distância e velocidade média
+def calculate_estimated_time(distance_km, speed_kmh=40):
+    time_hours = distance_km / speed_kmh
+    time_minutes = max(1, round(time_hours * 60))
+    return time_minutes
