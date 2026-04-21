@@ -14,3 +14,11 @@ def load_map(city):
 def get_nearest_node(graph, latitude, longitude):
     node = ox.nearest_nodes(graph, longitude, latitude)
     return node
+
+# Função para calcular a rota mais curta usando o Dijkstra
+def get_route_coordinates(graph, path):
+    coordinates = []
+    for node in path:
+        point = graph.nodes[node]
+        coordinates.append((point["y"], point["x"]))
+    return coordinates
