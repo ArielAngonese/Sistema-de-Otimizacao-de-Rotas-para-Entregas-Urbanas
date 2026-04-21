@@ -9,3 +9,8 @@ def geocode_address(address):
 def load_map(city):
     graph = ox.graph_from_place(city, network_type="drive")
     return graph
+
+# Função para encontrar o nó mais próximo no grafo
+def get_nearest_node(graph, latitude, longitude):
+    node = ox.nearest_nodes(graph, longitude, latitude)
+    return node
