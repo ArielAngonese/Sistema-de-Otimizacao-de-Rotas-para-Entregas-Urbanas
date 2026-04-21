@@ -1,6 +1,8 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from database import get_all_deliveries, get_delivery_by_id, insert_delivery, insert_address
+from data.map import load_map, get_nearest_node, get_route_coordinates
+from algorithms.dijkstra import calculate_route
+from database import get_all_deliveries, get_delivery_by_id, insert_delivery, insert_address, update_delivery_route
 
 # Criação da aplicação Flask
 app = Flask(__name__)
@@ -51,3 +53,30 @@ def create_delivery():
     )
 
     return jsonify({"delivery_id": id_delivery}), 201
+
+# Rota para calcular a rota mais curta entre origem e destino
+@app.route("/calculate-route", methods=["POST"])
+def calculate_route_api():
+    data = request.get_json()
+
+    origin_lat = data["origin_lat"]
+    origin_lng = data["origin_lng"]
+    destination_lat = data["destination_lat"]
+    destination_lng = data["destination_lng"]
+
+    graph = load_map(data["city"])
+
+    origin_node = get_nearest_node(graph, origin_lat, origin_lng)
+    destination_node = get_nearest_node(graph, destination_lat, destination_lng)
+
+    path = calculate_route(graph, origin_node, destination_node)
+    coordinates = get_route_coordinates(graph, path)
+
+    if "delivery_id" in data:
+        update_delivery_route(
+            data["delivery_id"],
+            data["distance"],
+            data["estimated_time"]
+        )
+
+    return jsonify({"route": coordinates})
