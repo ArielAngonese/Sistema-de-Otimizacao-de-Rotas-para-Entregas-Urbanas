@@ -80,3 +80,6 @@ def calculate_route_api():
         )
 
     return jsonify({"route": coordinates})
+
+if __name__ == "__main__":
+    app.run(debug=True)
