@@ -1,8 +1,6 @@
 import networkx as nx
 
-def calcular_rota(grafo, origem, destino):
-    try:
-        caminho = nx.shortest_path(grafo, origem, destino, weight="length")
-        return caminho
-    except:
-        return None
+# Função para calcular a rota mais curta usando o Dijkstra
+def calculate_route(graph, origin_node, destination_node):
+    path = nx.shortest_path(graph, origin_node, destination_node, weight="length")
+    return path
