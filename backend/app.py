@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from services.map import load_map, get_nearest_node, get_route_coordinates
 from algorithms.dijkstra import calculate_route
-from database import get_all_deliveries, get_delivery_by_id, insert_delivery, insert_address, update_delivery_route
+from backend.database import get_all_deliveries, get_delivery_by_id, insert_delivery, insert_address, update_delivery_route
 
 # Criação da aplicação Flask
 app = Flask(__name__)
@@ -80,6 +80,3 @@ def calculate_route_api():
         )
 
     return jsonify({"route": coordinates})
-
-if __name__ == "__main__":
-    app.run(debug=True)

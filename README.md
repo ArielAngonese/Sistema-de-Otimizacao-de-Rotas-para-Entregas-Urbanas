@@ -113,7 +113,7 @@ DB_CONFIG = {
 
 **4. Inicie o servidor**
 ```bash
-python app.py
+python main.py
 ```
 
 **5. Acesse a interface**
