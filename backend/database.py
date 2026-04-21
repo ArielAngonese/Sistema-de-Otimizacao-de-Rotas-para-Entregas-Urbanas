@@ -1,5 +1,5 @@
 import mysql.connector
-from config import DB_CONFIG
+from backend.config import DB_CONFIG
 
 # Abre uma conexão com o banco usando as configurações do config.py
 def connect():

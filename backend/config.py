@@ -1,6 +1,7 @@
 DB_CONFIG = {
-    "host": "localhost",
+    "host": "nozomi.proxy.rlwy.net",
+    "port": 49345,
     "user": "root",
-    "password": "",
-    "database": "entregas"
+    "password": "knXDDERPpKnteiFiezcicFTKkYqdUuSr",
+    "database": "projeto_rotas"
 }
