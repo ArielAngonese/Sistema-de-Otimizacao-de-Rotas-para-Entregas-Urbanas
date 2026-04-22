@@ -59,19 +59,21 @@ O **Algoritmo de Dijkstra** é executado sobre esse grafo para encontrar o camin
 ```
 .
 ├── algorithms/
-│   └── dijkstra.py       # Implementação do cálculo de rotas
+│   └── dijkstra.py       # Cálculo de rotas com Dijkstra
 ├── backend/
 │   ├── app.py            # Servidor Flask e rotas da API
-│   ├── config.py         # Configurações de banco de dados
+│   ├── config.py         # Configurações do banco de dados (não versionado)
 │   └── database.py       # Funções de acesso ao banco de dados
 ├── frontend/
 │   ├── index.html        # Interface web principal
 │   ├── script.js         # Lógica de interação do frontend
 │   └── style.css         # Estilos da interface
 ├── services/
-│   └── map.py            # Carregamento do mapa e geocodificação
+│   └── map.py            # Carregamento do mapa, geocodificação e cálculo de distância
 ├── .gitignore
+├── graph.py              # Carregamento do grafo na inicialização
 ├── LICENSE
+├── main.py               # Ponto de entrada do servidor
 ├── README.md
 └── requirements.txt
 ```
