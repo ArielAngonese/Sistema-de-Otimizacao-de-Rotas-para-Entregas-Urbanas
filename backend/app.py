@@ -58,31 +58,47 @@ def create_delivery():
 # Rota para calcular a rota mais curta entre origem e destino
 @app.route("/calculate-route", methods=["POST"])
 def calculate_route_api():
-    data = request.get_json()
+    try: 
 
-    origin_lat = data["origin_lat"]
-    origin_lng = data["origin_lng"]
-    destination_lat = data["destination_lat"]
-    destination_lng = data["destination_lng"]
+        data = request.get_json()
 
-    origin_node = get_nearest_node(graph, origin_lat, origin_lng)
-    destination_node = get_nearest_node(graph, destination_lat, destination_lng)
+        # Validação básica dos dados de entrada
+        if not data:
+            return jsonify({"erro": "Corpo da requisição inválido"}), 400
+        
+        # Verificação de campos obrigatórios
+        required_fields = ["origin_lat", "origin_lng", "destination_lat", "destination_lng"]
+        for field in required_fields:
+            if field not in data:
+                return jsonify({"erro": f"Campo obrigatório ausente: {field}"}), 400
 
-    path = calculate_route(graph, origin_node, destination_node)
-    coordinates = get_route_coordinates(graph, path)
+        origin_lat = data["origin_lat"]
+        origin_lng = data["origin_lng"]
+        destination_lat = data["destination_lat"]
+        destination_lng = data["destination_lng"]
 
-    distance = calculate_distance(graph, path)
-    estimated_time = calculate_estimated_time(distance)
+        origin_node = get_nearest_node(graph, origin_lat, origin_lng)
+        destination_node = get_nearest_node(graph, destination_lat, destination_lng)
 
-    if "delivery_id" in data:
-        update_delivery_route(
-            data["delivery_id"],
-            distance,
-            estimated_time
-        )          # ← fechamento correto
+        path = calculate_route(graph, origin_node, destination_node)
+        coordinates = get_route_coordinates(graph, path)
 
-    return jsonify({
-        "route": coordinates,
-        "distance_km": distance,
-        "estimated_time_minutes": estimated_time
-    })
+        distance = calculate_distance(graph, path)
+        estimated_time = calculate_estimated_time(distance)
+
+        if "delivery_id" in data:
+            update_delivery_route(
+                data["delivery_id"],
+                distance,
+                estimated_time
+            )           
+
+        return jsonify({
+            "route": coordinates,
+            "distance_km": distance,
+            "estimated_time_minutes": estimated_time
+        })
+
+    # Tratamento de erros em caso de falhas na rota ou dados inválidos
+    except Exception as e:
+        return jsonify({"erro": f"Erro ao calcular rota: {str(e)}"}), 500
