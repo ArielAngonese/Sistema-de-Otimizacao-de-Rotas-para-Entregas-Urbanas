@@ -1,4 +1,5 @@
 import osmnx as ox
+import math
 
 # Função de geocodificação para converter um endereço em coordenadas geográficas
 def geocode_address(address):
@@ -12,8 +13,16 @@ def load_map(city):
 
 # Função para encontrar o nó mais próximo no grafo
 def get_nearest_node(graph, latitude, longitude):
-    node = ox.nearest_nodes(graph, longitude, latitude)
-    return node
+    nearest_node = None
+    min_distance = float("inf")
+
+    for node, data in graph.nodes(data=True):
+        dist = math.sqrt((data["y"] - latitude) ** 2 + (data["x"] - longitude) ** 2)
+        if dist < min_distance:
+            min_distance = dist
+            nearest_node = node
+
+    return nearest_node
 
 # Função para calcular a rota mais curta usando o Dijkstra
 def get_route_coordinates(graph, path):
