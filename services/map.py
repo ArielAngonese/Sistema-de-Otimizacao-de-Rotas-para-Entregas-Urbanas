@@ -14,10 +14,10 @@ def load_map(city):
 # Função para encontrar o nó mais próximo no grafo
 def get_nearest_node(graph, latitude, longitude):
     nearest_node = None
-    min_distance = float("inf")
+    min_distance = float("inf") # Começa com a distância mínima como infinito
 
-    for node, data in graph.nodes(data=True):
-        dist = math.sqrt((data["y"] - latitude) ** 2 + (data["x"] - longitude) ** 2)
+    for node, data in graph.nodes(data=True): # Percorre todos os nós do grafo
+        dist = math.sqrt((data["y"] - latitude) ** 2 + (data["x"] - longitude) ** 2) # Calcula a distância euclidiana entre o nó e as coordenadas fornecidas
         if dist < min_distance:
             min_distance = dist
             nearest_node = node
